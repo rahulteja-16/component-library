@@ -1,9 +1,9 @@
 const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
 const ModuleFederationPlugin =
 	require('webpack').container.ModuleFederationPlugin
 const deps = require('../package.json').dependencies
+const { getExposedComp } = require('../exportHelper.tsx')
 
 const getWPConfig = (env) => {
 	return {
@@ -49,9 +49,7 @@ const getWPConfig = (env) => {
 			new ModuleFederationPlugin({
 				name: 'componentLibrary',
 				filename: 'componentLibrary.js',
-				exposes: {
-					'./Button': './src/Components/Button',
-				},
+				exposes: getExposedComp(),
 				shared: {
 					react: {
 						singleton: true,
@@ -66,9 +64,6 @@ const getWPConfig = (env) => {
 						requiredVersion: deps['styled-components'],
 					},
 				},
-			}),
-			new CopyPlugin({
-				patterns: [{ from: './public/*' }],
 			}),
 		],
 		stats: 'errors-only',
