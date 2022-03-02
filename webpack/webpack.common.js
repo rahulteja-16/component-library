@@ -3,7 +3,7 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const ModuleFederationPlugin =
 	require('webpack').container.ModuleFederationPlugin
 const deps = require('../package.json').dependencies
-const { getExposedComp } = require('../exportHelper.tsx')
+const { getExposedComp } = require('../exportHelper.ts')
 
 const getWPConfig = (env) => {
 	return {
